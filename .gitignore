@@ -113,3 +113,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# 自定义要忽略的文件及文件夹
+images
+*.code-workspace
