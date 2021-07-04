@@ -115,5 +115,5 @@ dmypy.json
 .pyre/
 
 # 自定义要忽略的文件及文件夹
-images
+images/
 *.code-workspace
