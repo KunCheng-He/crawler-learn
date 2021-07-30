@@ -3,10 +3,10 @@ import select
 from selenium import webdriver
 import time
 
-driver = webdriver.Firefox()
+driver = webdriver.Chrome()
 
 # 请求一个网址
-# driver.get('https://www.baidu.com')
+driver.get('https://www.baidu.com')
 
 # 关闭当前页面
 # driver.close()
