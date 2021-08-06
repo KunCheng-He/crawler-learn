@@ -1,0 +1,15 @@
+from urllib import request
+import scrapy
+
+
+class HttpbinSpider(scrapy.Spider):
+    name = 'httpbin'
+    allowed_domains = ['httpbin.org']
+    start_urls = ['http://httpbin.org/user-agent']
+
+    def parse(self, response):
+        print(response.text)
+        # 为了能够看到随机，所以我们发送多次请求
+        # 同样的网址，Scrapy发现请求过以后不会再次请求
+        # 所以我们设置一下dont_filter=True，这样就能够重复请求了
+        yield scrapy.Request(self.start_urls[0], dont_filter=True)
