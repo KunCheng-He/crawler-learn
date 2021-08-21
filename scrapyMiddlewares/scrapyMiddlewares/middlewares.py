@@ -3,6 +3,8 @@
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
+import random
+import base64
 from scrapy import signals
 
 # useful for handling different item types with a single interface
@@ -15,6 +17,33 @@ class UserAgentMiddlewares:
     def process_request(self, request, spider):
         ua = UserAgent(path='./User-Agent.json')
         request.headers["User-Agent"] = ua.random
+
+
+# 设置普通代理
+class IpProxyMiddlewares:
+    # IP代理池
+    PROXYS = [
+        {"ip": "114.99.3.146", "port": 3256},
+        {"ip": "125.87.95.64", "port": 3256}
+    ]
+
+    def process_request(self, request, spider):
+        # 随机选择代理
+        proxy = random.choice(self.PROXYS)
+        # 组装代理地址
+        proxy_url = "http://" + proxy["ip"] + ":" + str(proxy["port"])
+        request.meta['proxy'] = proxy_url
+
+
+# 设置独享代理
+class IpProxyPrivateMiddleware:
+    def process_request(self, request, spider):
+        proxy = "xxx.xx.x.xxx:xxxx"
+        user_password = "username:password"
+        request.meta['proxy'] = proxy
+        # bytes
+        b64_user_password = base64.b64encode(user_password.encode('utf-8'))
+        request.headers['Proxy-Authorization'] = "Basic " + b64_user_password.decode('utf-8')
 
 
 class ScrapymiddlewaresSpiderMiddleware:
