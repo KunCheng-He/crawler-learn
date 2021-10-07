@@ -18,8 +18,10 @@ def get_detail_url():
     response = requests.get(url_index, headers=header)
     text = response.text
     html = etree.HTML(text)
+    print(text)
     # 解析出详情页面的网址
     info_link = html.xpath('//ul[@class="carlist clearfix js-top"]/li/a/@href')
+    print("info_link", info_link)
 
     link_list = []
     url_pre = 'https://www.guazi.com'
@@ -31,6 +33,7 @@ def get_detail_url():
 if __name__ == '__main__':
     # 获取详情页面的连接列表
     link_list = get_detail_url()
+    print("link_list: ", link_list)
     print("详情页面链接获取成功...")
 
     # 请求详情页拿到想要的数据，并写入文件进行保存，追加的方式打开
